@@ -2,16 +2,16 @@ package burrito.blindress.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import burrito.blindress.ui.SplashUI
+import burrito.blindress.ui.InstructionsUI
 import org.jetbrains.anko.setContentView
 
 /**
  * @author kitttn
  */
 
-class SplashActivity : AppCompatActivity() {
+class InstructionsActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SplashUI().setContentView(this)
+        InstructionsUI().setContentView(this)
     }
 }
