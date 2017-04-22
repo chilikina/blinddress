@@ -9,7 +9,7 @@ import org.jetbrains.anko.setContentView
  * @author kitttn
  */
 
-class InstructionsActivity: AppCompatActivity() {
+class InstructionsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         InstructionsUI().setContentView(this)
