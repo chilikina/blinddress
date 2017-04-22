@@ -62,6 +62,7 @@ class ChoiceUI : AnkoComponent<ChoiceActivity> {
     override fun createView(ui: AnkoContext<ChoiceActivity>) = with(ui) {
         verticalLayout {
             button {
+                text = "Generate"
                 lparams {
                     weight = 1f
                     width = matchParent
@@ -69,11 +70,13 @@ class ChoiceUI : AnkoComponent<ChoiceActivity> {
                 }
             }
             button {
+                text = "Add"
                 lparams {
                     weight = 1f
                     width = matchParent
                     height = matchParent
                 }
+                onClick { ui.owner.presenter.onAddClick() }
             }
         }
     }
