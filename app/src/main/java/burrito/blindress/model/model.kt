@@ -26,6 +26,6 @@ class InformationModel private constructor() {
 
     fun isFirstTime(): Boolean {
         val sp: SharedPreferences = App.instance.getSharedPreferences(APP_SHARED_PREFS, Context.MODE_PRIVATE)
-        return sp.getBoolean(FIRST_TIME, false)
+        return sp.getBoolean(FIRST_TIME, true)
     }
 }
