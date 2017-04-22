@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import burrito.blindress.ui.InstructionsUI
 import org.jetbrains.anko.setContentView
 
+
 /**
  * @author kitttn
  */
