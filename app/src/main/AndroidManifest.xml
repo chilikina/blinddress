@@ -19,5 +19,6 @@
         </activity>
 
         <activity android:name=".activities.InstructionsActivity" />
+        <activity android:name=".activities.ChoiceActivity" />
     </application>
 </manifest>

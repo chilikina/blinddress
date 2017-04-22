@@ -17,8 +17,7 @@ import org.jetbrains.anko.setContentView
 
 class SplashActivity : AppCompatActivity(), IntroView {
     override fun startChoiceActivity() {
-        //
-        // startActivity(Intent(this, ChoiceActivity::class.java))
+        startActivity(Intent(this, ChoiceActivity::class.java))
     }
 
     override fun startInstructionsScreen() {

@@ -2,6 +2,7 @@ package burrito.blindress.ui
 
 import android.view.Gravity
 import burrito.blindress.R
+import burrito.blindress.activities.ChoiceActivity
 import burrito.blindress.activities.InstructionsActivity
 import burrito.blindress.activities.SplashActivity
 import org.jetbrains.anko.*
@@ -33,5 +34,25 @@ class InstructionsUI : AnkoComponent<InstructionsActivity> {
             textView(R.string.give_app_voice_instruction).lparams { topMargin = 24 }
         }
     }
+}
 
+class ChoiceUI : AnkoComponent<ChoiceActivity> {
+    override fun createView(ui: AnkoContext<ChoiceActivity>) = with(ui) {
+        verticalLayout {
+            button {
+                lparams {
+                    weight = 1f
+                    width = matchParent
+                    height = matchParent
+                }
+            }
+            button {
+                lparams {
+                    weight = 1f
+                    width = matchParent
+                    height = matchParent
+                }
+            }
+        }
+    }
 }

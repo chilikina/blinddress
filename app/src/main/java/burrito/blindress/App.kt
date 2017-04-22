@@ -7,11 +7,14 @@ import android.app.Application
  */
 
 class App : Application() {
-    private object Holder {
-        val INSTANCE = App()
+
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
     }
 
     companion object {
-        val instance: App by lazy { Holder.INSTANCE }
+        lateinit var instance: App
+            private set
     }
 }
