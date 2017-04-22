@@ -12,7 +12,7 @@ import burrito.blindress.view.IntroView
 class IntroPresenter(val view: IntroView) {
 
     init {
-        if (!InformationModel.instance.firstTime) {
+        if (!InformationModel.instance.isFirstTime()) {
             startChoiceActivity()
         } else {
             view.sayIntro(introductionSpeech())

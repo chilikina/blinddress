@@ -3,6 +3,7 @@ package burrito.blindress.ui
 import android.view.Gravity
 import burrito.blindress.R
 import burrito.blindress.activities.AnalyzeActivity
+import burrito.blindress.activities.ChoiceActivity
 import burrito.blindress.activities.InstructionsActivity
 import burrito.blindress.activities.IntroActivity
 import org.jetbrains.anko.*
@@ -55,5 +56,28 @@ class AnalyzeUI : AnkoComponent<AnalyzeActivity> {
             }
         }
     }
+}
 
+class ChoiceUI : AnkoComponent<ChoiceActivity> {
+    override fun createView(ui: AnkoContext<ChoiceActivity>) = with(ui) {
+        verticalLayout {
+            button {
+                text = "Generate"
+                lparams {
+                    weight = 1f
+                    width = matchParent
+                    height = matchParent
+                }
+            }
+            button {
+                text = "Add"
+                lparams {
+                    weight = 1f
+                    width = matchParent
+                    height = matchParent
+                }
+                onClick { ui.owner.presenter.onAddClick() }
+            }
+        }
+    }
 }

@@ -17,12 +17,17 @@ import org.jetbrains.anko.setContentView
 
 class IntroActivity : AppCompatActivity(), IntroView {
     override fun startChoiceActivity() {
-        //
-        // startActivity(Intent(this, ChoiceActivity::class.java))
+        startActivity(Intent(this, ChoiceActivity::class.java))
+        player.stop()
+        player.release()
+        finish()
     }
 
     override fun startInstructionsScreen() {
         startActivity(Intent(this, InstructionsActivity::class.java))
+        player.stop()
+        player.release()
+        finish()
     }
 
     lateinit var player: MediaPlayer
@@ -31,6 +36,7 @@ class IntroActivity : AppCompatActivity(), IntroView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         IntroUI().setContentView(this)
+        player = MediaPlayer()
 
         presenter = IntroPresenter(this)
     }

@@ -13,8 +13,6 @@ import android.support.v7.app.AppCompatActivity
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * @author kitttn

@@ -24,10 +24,8 @@ class InformationModel private constructor() {
         val instance: InformationModel by lazy { Holder.INSTANCE }
     }
 
-    var firstTime: Boolean = true
-
-    fun isFirstTime() = {
+    fun isFirstTime(): Boolean {
         val sp: SharedPreferences = App.instance.getSharedPreferences(APP_SHARED_PREFS, Context.MODE_PRIVATE)
-        sp.getBoolean(FIRST_TIME, true)
+        return sp.getBoolean(FIRST_TIME, false)
     }
 }
