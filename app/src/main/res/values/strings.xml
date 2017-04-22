@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Blindress</string>
-    <string name="hello_world">Hello, world!</string>
+    <string name="start_text">Начать</string>
 </resources>
