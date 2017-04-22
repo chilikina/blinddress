@@ -3,6 +3,7 @@ package burrito.blindress.ui
 import android.media.MediaPlayer
 import android.view.Gravity
 import burrito.blindress.R
+import burrito.blindress.activities.AnalyzeActivity
 import burrito.blindress.activities.InstructionsActivity
 import burrito.blindress.activities.SplashActivity
 import io.reactivex.Observable
@@ -55,7 +56,24 @@ class InstructionsUI : AnkoComponent<InstructionsActivity> {
             textView(context.getText(R.string.scan_clothing))
             textView(context.getText(R.string.give_app_voice_instruction))
             button(context.getString(R.string.start)) {
-                onClick { ui.owner.dispatchTakePictureIntent() }
+                onClick { startActivity<AnalyzeActivity>() }
+            }
+        }
+    }
+
+}
+
+class AnalyzeUI : AnkoComponent<AnalyzeActivity> {
+    override fun createView(ui: AnkoContext<AnalyzeActivity>) = with(ui) {
+        verticalLayout {
+            button("Record") {
+                onClick { ui.owner.rec.startRecording() }
+            }
+            button("Stop") {
+                onClick { ui.owner.rec.stopRecording() }
+            }
+            button("Play") {
+                onClick { ui.owner.rec.playback() }
             }
         }
     }
