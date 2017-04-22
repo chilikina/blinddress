@@ -4,7 +4,6 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import burrito.blindress.R
 import burrito.blindress.presenter.IntroPresenter
 import burrito.blindress.presenter.Phrase
 import burrito.blindress.ui.IntroUI
@@ -37,6 +36,7 @@ class IntroActivity : AppCompatActivity(), IntroView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         IntroUI().setContentView(this)
+        player = MediaPlayer()
 
         presenter = IntroPresenter(this)
     }
