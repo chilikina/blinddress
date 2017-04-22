@@ -8,6 +8,7 @@ import burrito.blindress.presenter.IntroPresenter
 import burrito.blindress.presenter.Phrase
 import burrito.blindress.ui.IntroUI
 import burrito.blindress.view.IntroView
+import com.squareup.seismic.ShakeDetector
 import io.reactivex.Observable
 import org.jetbrains.anko.setContentView
 
@@ -16,16 +17,26 @@ import org.jetbrains.anko.setContentView
  */
 
 class IntroActivity : AppCompatActivity(), IntroView {
+    override fun repeatIntro(introductionSpeech: List<Phrase>) {
+        sayIntro(introductionSpeech)
+    }
+
+    override fun getShakerListener(): ShakeDetector.Listener {
+        return this
+    }
+
+    override fun hearShake() {
+        presenter.onHearShake()
+    }
+
     override fun startChoiceActivity() {
         startActivity(Intent(this, ChoiceActivity::class.java))
-        player.stop()
         player.release()
         finish()
     }
 
     override fun startInstructionsScreen() {
         startActivity(Intent(this, InstructionsActivity::class.java))
-        player.stop()
         player.release()
         finish()
     }
@@ -53,6 +64,9 @@ class IntroActivity : AppCompatActivity(), IntroView {
                             sub.onComplete()
                         }
                     }
+                }
+                .doOnComplete {
+                    presenter.onSpeechEnded()
                 }
                 .subscribe()
     }
