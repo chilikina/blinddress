@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
 class ItemController extends Controller
 {
@@ -16,11 +15,19 @@ class ItemController extends Controller
      * @param Request $request
      *
      * @return Response
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      * @throws \LogicException
      */
     public function createAction(Request $request): Response
     {
         $item = new Item();
+        if (!$request->query->get('name')) {
+            throw $this->createAccessDeniedException(
+                'You have no access to the api'
+            );
+        }
+
         $item->setName($request->query->get('name'))
             ->setType($request->query->get('type'))
             ->setColor($request->query->get('color'))
@@ -38,25 +45,31 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/item/show")
-     * @param $itemId
+     * Matches /item/show/*
      *
-     * @return Item|object
+     * @Route("/item/show/{item}", name="item", requirements={"item": "\d+"})
+     * @param $item
+     *
+     * @return Response
+     * @throws \InvalidArgumentException
      * @throws \LogicException
-     * @throws NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @internal param $itemId
+     *
      */
-    public function showAction($itemId)
+    public function showAction($item): Response
     {
-        $item = $this->getDoctrine()
+        /** @var Item $itemObject */
+        $itemObject = $this->getDoctrine()
             ->getRepository('AppBundle:Item')
-            ->find($itemId);
+            ->find($item);
 
-        if (!$item) {
+        if (!$itemObject) {
             throw $this->createNotFoundException(
-                'No product found for id '.$itemId
+                'No product found for id '.$item
             );
         }
 
-        return $item;
+        return new Response($itemObject->toString());
     }
 }
