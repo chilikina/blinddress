@@ -2,7 +2,6 @@ package burrito.blindress.ui
 
 import android.media.MediaPlayer
 import android.view.Gravity
-import android.widget.Toast
 import burrito.blindress.R
 import burrito.blindress.activities.InstructionsActivity
 import burrito.blindress.activities.SplashActivity
@@ -15,6 +14,7 @@ import org.jetbrains.anko.*
 
 class SplashUI : AnkoComponent<SplashActivity> {
     override fun createView(ui: AnkoContext<SplashActivity>) = with(ui) {
+        val activity = ui.owner
         verticalLayout {
             val btnStart = button(R.string.start_text) {
                 text = ui.ctx.getString(R.string.start_text)
@@ -25,19 +25,21 @@ class SplashUI : AnkoComponent<SplashActivity> {
                     Observable.just(R.raw.hello, R.raw.i_need_your_cloths)
                             //.delay(2000, TimeUnit.MILLISECONDS)
                             .doOnNext {
-                                ui.owner.player = MediaPlayer.create(ui.ctx, it)
+                                activity.player = MediaPlayer.create(ui.ctx, it)
                             }
                             .flatMap {
                                 Observable.create<Boolean> { sub ->
-                                    ui.owner.player.start()
-                                    ui.owner.player.setOnCompletionListener {
+                                    activity.player.start()
+                                    activity.player.setOnCompletionListener {
                                         it.release()
                                         sub.onNext(true)
                                         sub.onComplete()
                                     }
                                 }
                             }
-                            .subscribe({}, {}, {})
+                            .subscribe({}, {}, {
+                                activity.startInstructionsActivity()
+                            })
 
                 }
             }.lparams(width = matchParent,
@@ -48,10 +50,13 @@ class SplashUI : AnkoComponent<SplashActivity> {
 
 class InstructionsUI : AnkoComponent<InstructionsActivity> {
     override fun createView(ui: AnkoContext<InstructionsActivity>) = with(ui) {
-        linearLayout {
-            textView(R.string.two_steps).lparams { width = matchParent }
-            textView(R.string.scan_clothing).lparams { topMargin = 24}
-            textView(R.string.give_app_voice_instruction).lparams { topMargin = 24}
+        verticalLayout {
+            textView(context.getText(R.string.two_steps))
+            textView(context.getText(R.string.scan_clothing))
+            textView(context.getText(R.string.give_app_voice_instruction))
+            button(context.getString(R.string.start)) {
+                onClick { ui.owner.dispatchTakePictureIntent() }
+            }
         }
     }
 
