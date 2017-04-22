@@ -18,11 +18,15 @@ import org.jetbrains.anko.setContentView
 class IntroActivity : AppCompatActivity(), IntroView {
     override fun startChoiceActivity() {
         startActivity(Intent(this, ChoiceActivity::class.java))
+        player.stop()
+        player.release()
         finish()
     }
 
     override fun startInstructionsScreen() {
         startActivity(Intent(this, InstructionsActivity::class.java))
+        player.stop()
+        player.release()
         finish()
     }
 
