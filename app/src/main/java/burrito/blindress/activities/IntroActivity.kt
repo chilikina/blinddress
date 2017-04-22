@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import burrito.blindress.presenter.IntroPresenter
 import burrito.blindress.presenter.Phrase
-import burrito.blindress.ui.SplashUI
+import burrito.blindress.ui.IntroUI
 import burrito.blindress.view.IntroView
 import io.reactivex.Observable
 import org.jetbrains.anko.setContentView
@@ -15,7 +15,7 @@ import org.jetbrains.anko.setContentView
  * @author kitttn
  */
 
-class SplashActivity : AppCompatActivity(), IntroView {
+class IntroActivity : AppCompatActivity(), IntroView {
     override fun startChoiceActivity() {
         //
         // startActivity(Intent(this, ChoiceActivity::class.java))
@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity(), IntroView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SplashUI().setContentView(this)
+        IntroUI().setContentView(this)
 
         presenter = IntroPresenter(this)
     }
