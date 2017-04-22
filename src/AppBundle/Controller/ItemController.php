@@ -7,41 +7,43 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
 class ItemController extends Controller
 {
     /**
      * @Route("/item/create")
-     * @throws \InvalidArgumentException
+     * @param Request $request
+     *
+     * @return Response
      * @throws \LogicException
      */
-    public function createAction()
+    public function createAction(Request $request): Response
     {
         $item = new Item();
-        $item->setName('Keyboard')
-            ->setType(1)
-            ->setColor(2)
-            ->setStyle(1)
-            ->setTags('')
-            ->setIsBase(1)
+        $item->setName($request->query->get('name'))
+            ->setType($request->query->get('type'))
+            ->setColor($request->query->get('color'))
+            ->setStyle($request->query->get('style'))
+            ->setTags($request->query->get('tags'))
+            ->setIsBase($request->query->get('base'))
             ->setIsWashing(0)
             ->setIsDelete(0);
 
         $em = $this->getDoctrine()->getManager();
-
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $em->persist($item);
-
-        // actually executes the queries (i.e. the INSERT query)
         $em->flush();
 
-        return new Response('Saved new product with id '.$item->getId());
+        return new Response($item->getId()?:0);
     }
 
     /**
      * @Route("/item/show")
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @param $itemId
+     *
+     * @return Item|object
      * @throws \LogicException
+     * @throws NotFoundHttpException
      */
     public function showAction($itemId)
     {
@@ -54,5 +56,7 @@ class ItemController extends Controller
                 'No product found for id '.$itemId
             );
         }
+
+        return $item;
     }
 }
