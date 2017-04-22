@@ -30,9 +30,11 @@ class AppMediaRecorder(private val activity: AppCompatActivity) {
     private fun record() {
         mediaRecorder = MediaRecorder()
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mediaRecorder.setOutputFile(fileName)
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+        mediaRecorder.setAudioEncodingBitRate(128000)
+        mediaRecorder.setAudioSamplingRate(44100)
         mediaRecorder.prepare()
 
         mediaRecorder.start()
