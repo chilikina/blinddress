@@ -3,8 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -12,7 +10,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class ItemController extends Controller
+class ItemController extends BaseController
 {
     /**
      * @Route("/item/create")
@@ -32,12 +30,12 @@ class ItemController extends Controller
             );
         }
 
-        $item->setName($request->query->get('name'))
+        $item->setName($request->query->get('type') . ' ' . $request->query->get('color'))
             ->setType($request->query->get('type'))
             ->setColor($request->query->get('color'))
-            ->setStyle($request->query->get('style'))
-            ->setTags($request->query->get('tags'))
-            ->setIsBase($request->query->get('base'))
+            ->setStyle('2')
+            ->setTags('official')
+            ->setIsBase(1)
             ->setIsWashing(0)
             ->setIsDelete(0);
 
@@ -45,7 +43,11 @@ class ItemController extends Controller
         $em->persist($item);
         $em->flush();
 
-        return new Response($item->getId()?:0);
+        $serializer = new Serializer([new ObjectNormalizer()], [new XmlEncoder(), new JsonEncoder()]);
+
+        $jsonContent = $serializer->serialize($item->getId() ?: 0, 'json');
+
+        return new Response($jsonContent);
     }
 
     /**
@@ -70,7 +72,7 @@ class ItemController extends Controller
 
         if (!$itemObject) {
             throw $this->createNotFoundException(
-                'No product found for id '.$item
+                'No product found for id ' . $item
             );
         }
 
