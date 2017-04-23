@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class ItemController extends BaseController
 {
@@ -60,8 +61,6 @@ class ItemController extends BaseController
      * @throws \InvalidArgumentException
      * @throws \LogicException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @internal param $itemId
-     *
      */
     public function showAction($item): Response
     {
