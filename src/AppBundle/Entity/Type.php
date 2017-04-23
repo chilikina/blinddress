@@ -30,6 +30,12 @@ class Type
     private $name;
 
     /**
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    private $category;
+
+
+    /**
      * Get id
      *
      * @return integer

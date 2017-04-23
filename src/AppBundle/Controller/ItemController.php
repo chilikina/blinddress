@@ -25,7 +25,7 @@ class ItemController extends BaseController
     public function createAction(Request $request): Response
     {
         $item = new Item();
-        if (!$request->query->get('name')) {
+        if (!$request->query->get('type')) {
             throw $this->createAccessDeniedException(
                 'You have no access to the api'
             );
@@ -46,7 +46,7 @@ class ItemController extends BaseController
 
         $serializer = new Serializer([new ObjectNormalizer()], [new XmlEncoder(), new JsonEncoder()]);
 
-        $jsonContent = $serializer->serialize($item->getId() ?: 0, 'json');
+        $jsonContent = $serializer->serialize($item ?: 0, 'json');
 
         return new Response($jsonContent);
     }
